@@ -1,4 +1,4 @@
-# FestoKI - Qualityassurance in Manufacturing Processes
+# FestoKI - Quality Assurance in Manufacturing Processes
 
 
 ## About
