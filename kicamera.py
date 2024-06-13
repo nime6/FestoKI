@@ -4,17 +4,15 @@ from settings import img_dir, file_prefix
 from picamera2 import Picamera2
 from PIL import Image
 import numpy as np
-
 import os
 import time
 import io
-data = io.BytesIO()
 
+data = io.BytesIO()
 picam = Picamera2()
 
 def setup_camera():
     #Setup PICAMERA
-
     picam.options["quality"] = 100
     config = picam.create_still_configuration()
     picam.configure(config)
@@ -28,8 +26,8 @@ def take_picture():
     data.seek(0)
     img = Image.open(data)
     #Crop picture
-    box = [428,160,1196,928]
-    img = img.crop(box)
+    BOX = [428,160,1196,928]
+    img = img.crop(BOX)
     return img
 
 def save_img(in_img, img_dir=img_dir, file_prefix=file_prefix):
@@ -66,25 +64,3 @@ def get_img():
 def close_cam():
     picam.close()
     print("Picam closed")
-
-
-#img.save("/home/pi/pictures/GS-Camera-"+str_current_datetime+"-res768.jpg")
-
-
-
-"""
-img224=img
-size=[224, 224]
-img224=img224.resize(size)
-img224.save("/home/pi/pictures/GS-Camera-"+str_current_datetime+"-res224.jpg")
-
-img299=img
-size=[299, 299]
-img299=img299.resize(size)
-img299.save("/home/pi/pictures/GS-Camera-"+str_current_datetime+"-res299.jpg")
-
-img513=img
-size=[513, 513]
-img513=img513.resize(size)
-img513.save("/home/pi/pictures/GS-Camera-"+str_current_datetime+"-res513.jpg")
-"""

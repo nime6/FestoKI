@@ -1,12 +1,8 @@
 import torch
 import torch.nn as nn
-import torch.optim as optim
-from torchvision import datasets, transforms
-from torch.utils.data import DataLoader
 from torchvision.models import resnet18, ResNet18_Weights
 
 class Predictor(nn.Module):
-
     def __init__(self):
         super().__init__()
         weights = ResNet18_Weights.DEFAULT

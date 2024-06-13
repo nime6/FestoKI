@@ -1,13 +1,7 @@
 import torch
-import torch.nn as nn
-import torchvision.models as models
 import torchvision.transforms as transforms
 from PIL import Image
-import json
-import urllib.request
 from model import Predictor
-
-
 
 class_names = ['Defect', 'Filled','Good']
 
@@ -24,9 +18,7 @@ def load_image():
     #if array: load img from array
     #...
     #return image as tensor
-    
-    
-    
+ 
 # Function to perform inference on an image
 def predict_image(img, model_path):
     model = Predictor()
@@ -59,13 +51,11 @@ def display_multiclass_results():
 
         
 if __name__ == "__main__":
-    # Input image path
-    image_path = r"/home/pi/code/G_Dataset/Licht_820_840/Filld_Parts/GS-Camera-2024-01-23--10-48-18-res513.jpg"  # Replace with the path to your input image
-
-    # True label (optional, provide if known)
     true_label = 1  # Replace with the true label of the input image
-    # Perform inference
+
+    # Inference
     predicted_label, probability = predict_image(img, model_path)
+
     # Display results
     display_results(image_path, true_label, predicted_label, probability)
 

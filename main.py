@@ -63,10 +63,6 @@ def tuersteher():
             bus.write_byte_data(DEVICE_ADDR, 4, 0x00)
             sys.exit()
         """     
-        
-
-
-
 
 if __name__ == "__main__":
     kicamera.setup_camera()
@@ -106,9 +102,6 @@ if __name__ == "__main__":
 
     stepstomove = 270000*16
     stepstomove_remaining = stepstomove
-    
-    
-    
 
     GPIO.add_event_detect(LIBA, GPIO.FALLING, callback = doIfFalling, bouncetime = 100)
 

@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 # coding=utf8
-
-
 import time as t
 import smbus
 import sys
