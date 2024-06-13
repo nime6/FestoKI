@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 #coding: utf8 
-import sys
 import time
 import RPi.GPIO as GPIO
 import smbus
 
 import kicamera
 from inference import predict_image
-
+from settings import model_path
 
 def doIfFalling(channel):
     global stepstomove
@@ -17,9 +16,7 @@ def doIfFalling(channel):
     stepstomove = 970*16
     stepstomove_remaining = stepstomove
     print("GPIO Falling to LOW - " , str(stepstomove), "Steps remaining")
-    
-
-        
+            
 def quality_assurance():
     global PHMAKE
     global stepstomove
@@ -27,8 +24,6 @@ def quality_assurance():
 
 
     img = kicamera.get_img()
-    model_path = r"model_all_Daten.pth"
-    model_path = r"best_model.pth"
 
     pred_class, probability = predict_image(img, model_path)
     print( pred_class, probability )
@@ -42,27 +37,17 @@ def tuersteher():
     DEVICE_ADDR = 0x10
     bus = smbus.SMBus(DEVICE_BUS)
 
-    bus.write_byte_data(DEVICE_ADDR, 1, 0xFF) # Auswerfer aktivieren
+    bus.write_byte_data(DEVICE_ADDR, 1, 0xFF) # Activate ejector and LED
     time.sleep(1)
-    bus.write_byte_data(DEVICE_ADDR, 1, 0x00) # Auswerfer deaktivieren
+    bus.write_byte_data(DEVICE_ADDR, 1, 0x00) # Deactivate ejector and LED
     
-    """
-    while True:
-        try:
-            for i in range(1,5):
-                bus.write_byte_data(DEVICE_ADDR, i, 0xFF)
-                time.sleep(1)
-                bus.write_byte_data(DEVICE_ADDR, i, 0x00)
-                time.sleep(1) 
-                
-        except KeyboardInterrupt as e:
-            print("Quit the Loop")
+    """Bus Adresses
             bus.write_byte_data(DEVICE_ADDR, 1, 0x00)
             bus.write_byte_data(DEVICE_ADDR, 2, 0x00)
             bus.write_byte_data(DEVICE_ADDR, 3, 0x00)
             bus.write_byte_data(DEVICE_ADDR, 4, 0x00)
             sys.exit()
-        """     
+    """     
 
 if __name__ == "__main__":
     kicamera.setup_camera()

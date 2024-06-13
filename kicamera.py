@@ -36,7 +36,6 @@ def save_img(in_img, img_dir=img_dir, file_prefix=file_prefix):
 
 def resize_img(in_img, size):
     out_img = in_img.resize(size)
-    #save_img(out_img)
     return out_img
 
 def get_img():
