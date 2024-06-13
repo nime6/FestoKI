@@ -26,7 +26,7 @@ docker build -t festo_image .
 Run the image from the Dockerfile in an interactive shell
 
 ```bash
-docker run -it --rm festo_container -d festo_image /bin/bash
+docker run -it --rm --name festo_container festo_image /bin/bash
 
 # -it: Runs container in interactive mode, with /bin/bash in an interactive shell
 # --rm: Ensures that the container is removed as soon as it stops running.
