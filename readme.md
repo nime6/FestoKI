@@ -15,7 +15,7 @@ cd FestoKI
 
 Install Docker Engine (https://docs.docker.com/engine/install/)
 
-Build a Docker image  from the Dockerfile in the current directory.
+Build Docker image from the Dockerfile.
 
 ```bash
 docker build -t festo_image .
@@ -23,7 +23,7 @@ docker build -t festo_image .
 # -t: Is used to tag the Docker image with a name and optionally a tag in the format name:tag
 ```
 
-Run the image from the Dockerfile in an interactive shell
+Run image from Dockerfile in an interactive shell
 
 ```bash
 docker run -it --rm --name festo_container festo_image /bin/bash
