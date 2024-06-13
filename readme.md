@@ -23,10 +23,10 @@ docker build -t festo_image .
 # -t: Is used to tag the Docker image with a name and optionally a tag in the format name:tag
 ```
 
-Run a Docker image  from the Dockerfile in the current directory in interactive mode
+Run the image from the Dockerfile in an interactive shell
 
 ```bash
-docker run -it --rm festo_container /bin/bash
+docker run -it --rm festo_container -d festo_image /bin/bash
 
 # -it: Runs container in interactive mode, with /bin/bash in an interactive shell
 # --rm: Ensures that the container is removed as soon as it stops running.
