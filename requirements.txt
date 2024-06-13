@@ -2,3 +2,4 @@ Pillow
 numpy
 picamera2
 smbus
+RPi.GPIO
