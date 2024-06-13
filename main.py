@@ -3,7 +3,6 @@
 import time
 import RPi.GPIO as GPIO
 import smbus
-
 import kicamera
 from inference import predict_image
 from settings import model_path
@@ -100,7 +99,6 @@ if __name__ == "__main__":
                 PHMAKE = 0    
 
                 #Start QA functionality_______________________________________________________________________________________________________
-
                 pred_class, probability = quality_assurance()
                 
                 if pred_class == "Defect":

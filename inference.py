@@ -1,7 +1,10 @@
 import torch
 import torchvision.transforms as transforms
 from PIL import Image
+import numpy as np
+
 from model import Predictor
+
 
 class_names = ['Defect', 'Filled','Good']
 
@@ -12,12 +15,36 @@ transform = transforms.Compose([
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 ])
 
-def load_image():
-    pass
-    #if path: load img from path
-    #if array: load img from array
-    #...
-    #return image as tensor
+
+def load_image_as_tensor(image_input):
+    """
+    Load an image from a NumPy array, PIL image, or file path and return as a PyTorch tensor.
+
+    Parameters:
+    - image_input: NumPy array, PIL Image, or file path (str).
+
+    Returns:
+    - image_tensor: PyTorch tensor.
+    """
+    # Define a transform to convert the image to a PyTorch tensor
+    transform = transforms.ToTensor()
+
+    if isinstance(image_input, np.ndarray):
+        # If the input is a NumPy array, convert it to a PIL image first
+        image = Image.fromarray(image_input)
+    elif isinstance(image_input, Image.Image):
+        # If the input is already a PIL image, use it directly
+        image = image_input
+    elif isinstance(image_input, str):
+        # If the input is a file path, load the image from the file
+        image = Image.open(image_input)
+    else:
+        raise TypeError("Unsupported image input type. Must be a NumPy array, PIL image, or file path.")
+
+    # Apply the transform to convert the PIL image to a PyTorch tensor
+    image_tensor = transform(image)
+
+    return image_tensor
  
 # Function to perform inference on an image
 def predict_image(img, model_path):
