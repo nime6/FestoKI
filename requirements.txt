@@ -1,5 +1,6 @@
 Pillow
 numpy
-picamera2
-smbus
-RPi.GPIO
+
+#smbus
+#RPi.GPIO
+#picamera2
