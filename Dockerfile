@@ -7,6 +7,9 @@ WORKDIR /app
 # Copy the requirements file into the container at /app
 COPY requirements.txt /app/
 
+# Install core dependencies
+RUN apt-get update && apt-get install -y libpq-dev build-essential
+
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
