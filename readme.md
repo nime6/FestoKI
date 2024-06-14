@@ -14,7 +14,12 @@ cd FestoKI
 ### Docker Setup
 
 Install Docker Engine (https://docs.docker.com/engine/install/)
+On Linux install QEMU binaries
+```bash
+ docker run --privileged --rm tonistiigi/binfmt --install all
+```
 
+ 
 Build Docker image from the Dockerfile.
 
 ```bash
