@@ -1,6 +1,9 @@
 # Ignore Python cache files
 __pycache__/
 training/
+*.pth
+*.pt
+testImages/
 
 # Ignore other system files
 .DS_Store

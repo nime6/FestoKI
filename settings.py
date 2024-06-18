@@ -1,9 +1,6 @@
-from datetime import datetime
-
 #Config
 
-model_path = r"best_model.pth"
+model_path = r"/home/pi/Desktop/FestoKI/FestoKI/model_scripted.pt"
+img_dir = r"/home/pi/Desktop/FestoKI/FestoKI/test_images"
 
-current_datetime = str(datetime.now().strftime("%Y-%m-%d--%H-%M-%S"))
-img_dir = r"/home/pi/pictures/GS-Camera-"
-file_prefix = f"{current_datetime}-res"
+

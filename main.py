@@ -4,11 +4,17 @@ import sys
 import time
 import RPi.GPIO as GPIO
 import smbus
-
+import torch
+import torch.nn as nn
+from torchvision import transforms
 import kicamera
-from inference import predict_image, Predictor
+from inference import predict_image_multiclass, Predictor
+from settings import model_path
 
-predictor = Predictor("Path")
+
+#predictor = Predictor(model_path)
+predictor = torch.jit.load(model_path)
+predictor.eval()
 
 
 def doIfFalling(channel):
@@ -28,11 +34,10 @@ def quality_assurance():
     global stepstomove_remaining
 
 
-    img = kicamera.get_img()
-    #model_path = r"model_all_Daten.pth"
-    #model_path = r"best_model.pth"
+    img, img_path = kicamera.get_img()
+    print(img_path)
 
-    pred_class, probability = predict_image(img, predictor)
+    pred_class, probability = predict_image_multiclass(img_path, predictor)
     print( pred_class, probability )
     #print (f"taking photo, img size: {img.size}")
 
