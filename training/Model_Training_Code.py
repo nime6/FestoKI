@@ -19,6 +19,10 @@ import matplotlib.pyplot as plt
 import random
 import numpy as np
 from PIL import Image
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+import random
+
 
 """
 Die folgenden Zeilen sind relevant, wenn das Modell auf Google Colab trainiert werden soll.
@@ -407,4 +411,336 @@ def eval_model(model:torch.nn.Module,
             "model_loss:":eval_loss,
             "model_acc:": eval_acc}
 
+########################################## Model Herunterladen ####################################
+# Laden des vortrainierten ResNet101-Modells
+model_ResNet101 = models.resnet101(pretrained=True)
+
+
+###################################### Summary Library importieren ###############################
+# Installation und Import der torchinfo-Bibliothek für Modellinformationen
+try:
+    import torchinfo
+except:
+    !pip install torchinfo
+    from torchinfo import summary
+
+# Zusammenfassung des Modells anzeigen
+summary(model=model_test, input_size=[16, 3, 224, 224])
+
+
+########################### Anpassung der letzten Schicht #################
+# Anpassung der letzten fully connected Schicht an die Anzahl der Klassen
+num_ftrs = model_ResNet101.fc.in_features
+model_ResNet101.fc = nn.Linear(num_ftrs, len(klassen_Namen))
+model_test = model_ResNet101.to(device)
+
+# Definition der Verlustfunktion und des Optimierers
+loss_fn = nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(params=model_ResNet101.parameters(),
+                             lr=0.000001)
+
+
+############################## Model trainieren ##################################
+# Setzen eines Seeds für Reproduzierbarkeit
+torch.manual_seed(42)
+torch.cuda.manual_seed(42)
+
+# Definition der Trainingsparameter und Durchführung des Trainings
+EPOCHS_NUM = 150
+model_test_result = train(model=model_test, 
+                          train_dataloader=train_dataloader, 
+                          test_dataloader=test_dataloader, 
+                          loss_fn=loss_fn, 
+                          optimizer=optimizer, 
+                          epochs=EPOCHS_NUM, 
+                          device='cuda')
+
+
+####################### Ploten loss und acc Kurven ########################
+
+from typing import Dict, List
+import pickle
+def plot_loss_and_acc_curve(results: Dict[str, List[float]]):
+    epochs = range(1, len(results["train_loss"]) + 1)
+
+    fig, ax1 = plt.subplots(figsize=(15, 7))
+
+
+    ax1.plot(epochs, results["train_loss"], label="Train Loss", color="orange")
+    ax1.plot(epochs, results["test_loss"], label="Test Loss", color="blue")
+    ax1.set_xlabel("Epochs")
+    ax1.set_ylabel("Loss")
+    ax1.legend(loc="upper left")
+
+    ax2 = ax1.twinx()
+    ax2.plot(epochs, results["train_acc"], label="Train Accuracy", color="orange")
+    ax2.plot(epochs, results["test_acc"], label="Test Accuracy", color="blue")
+    ax2.set_ylabel("Accuracy")
+    ax2.legend(loc="upper right")
+
+    plt.title("Training Loss and Accuracy")
+    plt.show()
+
+
+############################ Ploten von Confisuen Matrix ###########################
+
+# Plott confusion matrix
+from typing import Dict, List
+
+def plot_model_confusion_Matrix(model:torch.nn.Module,
+                                data_loader:torch.utils.data.DataLoader,
+                                data,
+                                class_names:List
+                                ):
+  # 1. Vorhersagen mit dem trainierten Modell machen
+  y_preds = []
+  model.eval()
+  with torch.inference_mode():
+   for X, y in tqdm(data_loader, desc="Vorhersage machen"):
+      X, y = X.to(device), y.to(device)
+
+      y_logit = model(X)
+
+      y_pred = torch.softmax(y_logit, dim=1).argmax(dim=1)
+
+      y_preds.append(y_pred.cpu())
+
+  y_pred_tensor = torch.cat(y_preds)
+  # 2. Instanz der Confusion Matrix einrichten und Vorhersagen mit den Zielen vergleichen
+  confmat = ConfusionMatrix(num_classes=len(class_names), task='multiclass')
+
+  if not isinstance(data.targets, torch.Tensor):
+      data_tensor = torch.tensor(data.targets)
+
+  confmat_tensor = confmat(preds=y_pred_tensor,
+                         target=data_tensor
+                         )
+
+
+  fig, ax = plot_confusion_matrix(
+    conf_mat=confmat_tensor.numpy(),
+    class_names=class_names,
+    figsize=(5, 6)
+    );
+
+plot_model_confusion_Matrix(model=model_test,
+                            data_loader=test_dataloader,
+                            data=test_data,
+                            class_names=klassen_Namen)
+
+################################ Datenvertreilung ploten #######################
+
+class CustomImageFolder(datasets.ImageFolder):
+    def __getitem__(self, index):
+        original_tuple = super(CustomImageFolder, self).__getitem__(index)
+        path = self.imgs[index][0]
+        tuple_with_path = (original_tuple + (path,))
+        return tuple_with_path
+
+
+custom_feature_image_dataset = CustomImageFolder('/content/Gefiltert', transform=transform)
+
+custom_feature_dataloader = DataLoader(custom_feature_image_dataset, batch_size=8, shuffle=False)
+
+features, labels, image_paths = [], [], []
+for inputs, classes, paths in custom_feature_dataloader:
+    outputs = model_test(inputs.to(device))
+    features.extend(outputs.detach().cpu().numpy())
+    labels.extend(classes.numpy())
+    image_paths.extend(paths)
+
+features = np.array(features)
+labels = np.array(labels)
+
+pca = PCA(n_components=2)
+reduced_features = pca.fit_transform(features)
+
+plt.figure(figsize=(10, 8))
+for class_index in np.unique(labels):
+    plt.scatter(reduced_features[labels == class_index, 0], reduced_features[labels == class_index, 1], label=f'{klassen_Namen[class_index]}', alpha=0.5)
+plt.legend()
+plt.title('Datenpunkte Verteilung')
+plt.axis(False)
+plt.show()
+
+
+
+####################### Plotten von Verlust- und Genauigkeitskurven ########################
+from typing import Dict, List
+import pickle
+
+def plot_loss_and_acc_curve(results: Dict[str, List[float]]):
+    """
+    Plottet die Verlust- und Genauigkeitskurven für das Training und den Test.
+    
+    Args:
+        results: Ein Dictionary mit den Trainings- und Testergebnissen.
+    """
+    epochs = range(1, len(results["train_loss"]) + 1)
+
+    fig, ax1 = plt.subplots(figsize=(15, 7))
+
+    # Verlustskurven plotten
+    ax1.plot(epochs, results["train_loss"], label="Train Loss", color="orange")
+    ax1.plot(epochs, results["test_loss"], label="Test Loss", color="blue")
+    ax1.set_xlabel("Epochs")
+    ax1.set_ylabel("Loss")
+    ax1.legend(loc="upper left")
+
+    # Genauigkeitskurven plotten
+    ax2 = ax1.twinx()
+    ax2.plot(epochs, results["train_acc"], label="Train Accuracy", color="orange", linestyle="--")
+    ax2.plot(epochs, results["test_acc"], label="Test Accuracy", color="blue", linestyle="--")
+    ax2.set_ylabel("Accuracy")
+    ax2.legend(loc="upper right")
+
+    plt.title("Training Loss and Accuracy")
+    plt.show()
+
+############################ Plotten der Konfusionsmatrix ###########################
+from typing import Dict, List
+
+def plot_model_confusion_Matrix(model: torch.nn.Module,
+                                data_loader: torch.utils.data.DataLoader,
+                                data,
+                                class_names: List):
+    """
+    Erstellt und plottet die Konfusionsmatrix für das gegebene Modell und die Testdaten.
+    
+    Args:
+        model: Das trainierte PyTorch-Modell.
+        data_loader: Der DataLoader mit den Testdaten.
+        data: Das Dataset-Objekt.
+        class_names: Eine Liste mit den Namen der Klassen.
+    """
+    # Vorhersagen mit dem trainierten Modell machen
+    y_preds = []
+    model.eval()
+    with torch.inference_mode():
+        for X, y in tqdm(data_loader, desc="Vorhersage machen"):
+            X, y = X.to(device), y.to(device)
+            y_logit = model(X)
+            y_pred = torch.softmax(y_logit, dim=1).argmax(dim=1)
+            y_preds.append(y_pred.cpu())
+
+    y_pred_tensor = torch.cat(y_preds)
+
+    # Konfusionsmatrix erstellen
+    confmat = ConfusionMatrix(num_classes=len(class_names), task='multiclass')
+    if not isinstance(data.targets, torch.Tensor):
+        data_tensor = torch.tensor(data.targets)
+    confmat_tensor = confmat(preds=y_pred_tensor, target=data_tensor)
+
+    # Konfusionsmatrix plotten
+    fig, ax = plot_confusion_matrix(
+        conf_mat=confmat_tensor.numpy(),
+        class_names=class_names,
+        figsize=(5, 6)
+    )
+
+# Konfusionsmatrix für das Testset plotten
+plot_model_confusion_Matrix(model=model_test,
+                            data_loader=test_dataloader,
+                            data=test_data,
+                            class_names=klassen_Namen)
+
+################################ Datenverteilung plotten #######################
+class CustomImageFolder(datasets.ImageFolder):
+    """
+    Erweiterte ImageFolder-Klasse, die auch den Dateipfad zurückgibt.
+    """
+    def __getitem__(self, index):
+        original_tuple = super(CustomImageFolder, self).__getitem__(index)
+        path = self.imgs[index][0]
+        tuple_with_path = (original_tuple + (path,))
+        return tuple_with_path
+
+# Erstellen des angepassten Datasets und DataLoaders
+custom_feature_image_dataset = CustomImageFolder('/content/Gefiltert', transform=transform)
+custom_feature_dataloader = DataLoader(custom_feature_image_dataset, batch_size=8, shuffle=False)
+
+# Extrahieren der Features und Labels
+features, labels, image_paths = [], [], []
+for inputs, classes, paths in custom_feature_dataloader:
+    outputs = model_test(inputs.to(device))
+    features.extend(outputs.detach().cpu().numpy())
+    labels.extend(classes.numpy())
+    image_paths.extend(paths)
+
+features = np.array(features)
+labels = np.array(labels)
+
+# PCA zur Dimensionsreduktion
+pca = PCA(n_components=2)
+reduced_features = pca.fit_transform(features)
+
+# Plotten der reduzierten Features
+plt.figure(figsize=(10, 8))
+for class_index in np.unique(labels):
+    plt.scatter(reduced_features[labels == class_index, 0], 
+                reduced_features[labels == class_index, 1], 
+                label=f'{klassen_Namen[class_index]}', 
+                alpha=0.5)
+plt.legend()
+plt.title('Datenpunkte Verteilung')
+plt.axis('off')
+plt.show()
+
+######################################### Daten Visualisieren #############################
+
+# Seed für Reproduzierbarkeit setzen
+random.seed(30)
+
+# Liste aller Bildpfade erstellen
+image_path_list = list(image_path.glob('*/*/*.jpg'))
+
+# Zufälliges Bild auswählen
+random_image_path = random.choice(image_path_list)
+image_class = random_image_path.parent.stem
+
+# Bild öffnen und Informationen ausgeben
+img = Image.open(random_image_path)
+print(f"Zufälliger Bildpfad: {random_image_path}")
+print(f"Bildklasse: {image_class}")
+print(f"Bildhöhe: {img.height}")
+print(f"Bildbreite: {img.width}")
+
+# Bild als Numpy-Array anzeigen
+img_as_array = np.asarray(img)
+plt.figure(figsize=(5,5))
+plt.imshow(img_as_array)
+plt.title(image_class)
+plt.axis(False)
+
+def plot_transformed_images(image_paths: list, transform, n=4, seed=None):
+    """
+    Plottet originale und transformierte Versionen von zufällig ausgewählten Bildern.
+    
+    Args:
+        image_paths: Liste der Bildpfade
+        transform: Anzuwendende Transformation
+        n: Anzahl der zu plottenden Bilder
+        seed: Seed für die Zufallsauswahl
+    """
+    if seed:
+        random.seed(seed)
+    else:
+        random.seed(42)
+    
+    random_image_paths = random.sample(image_paths, k=n)
+    for image_path in random_image_paths:
+        with Image.open(image_path) as f:
+            fig, ax = plt.subplots(nrows=1, ncols=2)
+            fig.suptitle(f"Klasse: {image_path.parent.stem}")
+            
+            # Originalbild plotten
+            ax[0].imshow(f)
+            ax[0].set_title(f"Original\nGröße: {f.size}")
+            ax[0].axis(False)
+            
+            # Transformiertes Bild plotten
+            transformed_image = transform(f)
+            ax[1].imshow(transformed_image.permute(1, 2, 0))
+            ax[1].set_title(f"Transformierte Größe\n{transformed_image.shape}")
+            ax[1].axis(False)
 
