@@ -1,0 +1,173 @@
+{
+  "main": {
+    "id": "d9168c07929f6ee3",
+    "type": "split",
+    "children": [
+      {
+        "id": "5b28084f7909fb06",
+        "type": "tabs",
+        "dimension": 53.102189781021906,
+        "children": [
+          {
+            "id": "a58e608634b0cde8",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
+          }
+        ]
+      },
+      {
+        "id": "76c83d3ff3cd69a1",
+        "type": "tabs",
+        "dimension": 46.8978102189781,
+        "children": [
+          {
+            "id": "07f0871fd401e9c6",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "4c038799080586d9",
+    "type": "split",
+    "children": [
+      {
+        "id": "ae0795733a5e1687",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7553d0ea103d3a70",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "87a8d7cba07eb8ce",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "ad09463d788cf4ed",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "36dc916b958f0e76",
+    "type": "split",
+    "children": [
+      {
+        "id": "579a820c40af5e90",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e382fd888f7e3bc4",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "5656a8f804b9a0e4",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "aa31cd3756cffa2e",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "3c20151991580317",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 442.5,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "a58e608634b0cde8",
+  "lastOpenFiles": [
+    "Festo/Forschungsanlage.md",
+    "Festo/Demonstrator.md",
+    "Festo/Brainstorm.canvas",
+    "Forschungsanlage.md",
+    "Demonstrator.md",
+    "Dataset.md",
+    "Brainstorm.canvas",
+    "Welcome.md",
+    "Festo/Dataset.md",
+    "create a link.md",
+    "Repository.md",
+    "LLM.md",
+    "Festo"
+  ]
+}
