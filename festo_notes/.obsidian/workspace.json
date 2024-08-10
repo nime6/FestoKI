@@ -4,31 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "5b28084f7909fb06",
+        "id": "224c595461ca9353",
         "type": "tabs",
-        "dimension": 53.102189781021906,
         "children": [
           {
-            "id": "a58e608634b0cde8",
+            "id": "ffdbb36e3253f073",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
-            }
-          }
-        ]
-      },
-      {
-        "id": "76c83d3ff3cd69a1",
-        "type": "tabs",
-        "dimension": 46.8978102189781,
-        "children": [
-          {
-            "id": "07f0871fd401e9c6",
-            "type": "leaf",
-            "state": {
-              "type": "graph",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "Repository.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -97,6 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Repository.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,6 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Repository.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -134,7 +124,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "Repository.md"
+              }
             }
           }
         ]
@@ -154,20 +146,20 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "a58e608634b0cde8",
+  "active": "ffdbb36e3253f073",
   "lastOpenFiles": [
+    "Dataset.md",
+    "Demonstrator.md",
+    "Forschungsanlage.md",
+    "LLM.md",
+    "Repository.md",
+    "Brainstorm.canvas",
     "Festo/Forschungsanlage.md",
     "Festo/Demonstrator.md",
     "Festo/Brainstorm.canvas",
-    "Forschungsanlage.md",
-    "Demonstrator.md",
-    "Dataset.md",
-    "Brainstorm.canvas",
     "Welcome.md",
     "Festo/Dataset.md",
     "create a link.md",
-    "Repository.md",
-    "LLM.md",
     "Festo"
   ]
 }
