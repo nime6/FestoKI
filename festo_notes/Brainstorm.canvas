@@ -1,8 +1,8 @@
 {
 	"nodes":[
-		{"id":"57d3aed4b0730c10","type":"file","file":"Festo/Demonstrator.md","x":-200,"y":120,"width":400,"height":355},
 		{"id":"1fa3dd9e933f1c17","type":"text","text":"# Festo-Anlage","x":140,"y":-120,"width":250,"height":70},
-		{"id":"7261c69f6bd93296","type":"file","file":"Festo/Forschungsanlage.md","x":265,"y":120,"width":455,"height":355}
+		{"id":"7261c69f6bd93296","type":"file","file":"Festo/Forschungsanlage.md","x":265,"y":120,"width":455,"height":355},
+		{"id":"57d3aed4b0730c10","type":"file","file":"Festo/Demonstrator.md","x":-220,"y":120,"width":400,"height":355}
 	],
 	"edges":[
 		{"id":"ae3615643f753ff2","fromNode":"1fa3dd9e933f1c17","fromSide":"bottom","toNode":"57d3aed4b0730c10","toSide":"top"},
