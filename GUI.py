@@ -23,6 +23,7 @@ PHMAKE = 0
 stepstomove = 270000*16
 stepstomove_remaining = stepstomove
 latest_prediction = {"class": None, "probability": None, "image_path": None}
+pending_save = {"image_path": None, "class": None, "save_path": None}
 stop_flag = threading.Event()
 update_gui = threading.Event()
 
@@ -65,18 +66,45 @@ def doIfFalling(channel):
 
 GPIO.add_event_detect(LIBA, GPIO.FALLING, callback=doIfFalling, bouncetime=100)
 
+def save_image(img_path, selected_class):
+    if img_path is None:
+        return "Kein Bild zum Speichern vorhanden."
+
+    class_folder = os.path.join("Predictions", selected_class)
+    os.makedirs(class_folder, exist_ok=True)
+    base_filename = os.path.basename(img_path)
+    save_path = os.path.join(class_folder, base_filename)
+    counter = 1
+    while os.path.exists(save_path):
+        save_path = os.path.join(class_folder, f"{os.path.splitext(base_filename)[0]}_{counter}{os.path.splitext(base_filename)[1]}")
+        counter += 1
+    Image.open(img_path).save(save_path)
+    return save_path
+
 def quality_assurance():
-    global PHMAKE, stepstomove, stepstomove_remaining, latest_prediction
+    global latest_prediction, pending_save
+    
+    if pending_save["image_path"]:
+        save_path =save_image(pending_save["image_path"], pending_save["class"])
+        pending_save["save_path"] = save_path
+    
     img, img_path = kicamera.get_img()
     print(f"Image captured: {img_path}")
     pred_class, probability = predict_image_multiclass(img_path, predictor)
     print(f"Prediction: {pred_class}, Probability: {probability}")
+
     latest_prediction = {
         "class": pred_class,
         "probability": probability,
         "image_path": img_path
     }
-    update_gui.set()  # Signal GUI update
+
+        
+    pending_save["image_path"] = img_path
+    pending_save["class"] = pred_class
+    
+    
+    update_gui.set()
     return pred_class, probability
 
 def tuersteher():
@@ -132,7 +160,17 @@ def stop_system():
     print("Stopping system...")
     stop_flag.set()
     GPIO.output(STENA, STDisable)
-    return "System gestoppt"
+    
+    if pending_save["image_path"]:
+        save_path =save_image(pending_save["image_path"], pending_save["class"])
+        pending_save["image_path"] = None
+        pending_save["class"] = None
+        pending_save["save_path"] = save_path
+
+    
+    return f"System gestoppt."
+
+
 
 def update_prediction():
     update_gui.wait()
@@ -143,8 +181,15 @@ def update_prediction():
         plt.imshow(img)
         plt.axis('off')
         plt.title(f"Vorhersage: {latest_prediction['class']}\nWahrscheinlichkeit: {latest_prediction['probability']:.2f}%")
-        return plt, f"Letztes Bild: {latest_prediction['image_path']}"
-    return None, "Kein Bild verfügbar"
+        return plt, latest_prediction['class'], pending_save["save_path"]
+    return None, None, None
+
+def update_classification(selected_class):
+    global pending_save
+    if pending_save["image_path"]:
+        pending_save["class"] = selected_class
+
+
 
 def embed_image(image_path):
     try:
@@ -182,7 +227,9 @@ def main():
         gr.Markdown("""
         ## Anleitung
         1. Klicken Sie auf 'System starten', um die Anlage zu aktivieren.
-        3. Klicken Sie auf 'System stoppen', um die Anlage zu deaktivieren.
+        2. Die Bilder werden automatisch aufgenommen und klassifiziert.
+        3. Sie können die Klassifizierung korrigieren, indem Sie eine andere Klasse auswählen.
+        4. Klicken Sie auf 'System stoppen', um die Anlage zu deaktivieren.
         """)
         
         with gr.Row():
@@ -193,13 +240,19 @@ def main():
         
         with gr.Row():
             image_output = gr.Plot(label="Aktuelles Bild mit Vorhersage")
+        
         with gr.Row():
-            prediction_output = gr.Textbox(label="Letzte Vorhersage")
+            class_radio = gr.Radio(["Good", "Defect", "Filled"], label="Klasse", info="Aktuelle Klassifizierung")
+            save_path_output = gr.Textbox(label = "Speicherpfad des letzten Bildes")
         
         start_btn.click(start_system, outputs=[status_output])
         stop_btn.click(stop_system, outputs=[status_output])
         
-        demo.load(update_prediction, outputs=[image_output, prediction_output], every=1)
+        class_radio.change(update_classification, inputs=[class_radio])
+
+        
+        demo.load(update_prediction, outputs=[image_output, class_radio, save_path_output], every=1)
+
 
     demo.launch()
 
