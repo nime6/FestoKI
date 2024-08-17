@@ -5,18 +5,33 @@
   "showAttachments": false,
   "hideUnresolved": false,
   "showOrphans": true,
-  "collapse-color-groups": true,
-  "colorGroups": [],
-  "collapse-display": true,
-  "showArrow": false,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "file:Forschungsanlage",
+      "color": {
+        "a": 1,
+        "rgb": 31743
+      }
+    },
+    {
+      "query": "file:Meetings",
+      "color": {
+        "a": 1,
+        "rgb": 14048385
+      }
+    }
+  ],
+  "collapse-display": false,
+  "showArrow": true,
   "textFadeMultiplier": 0,
-  "nodeSizeMultiplier": 1,
+  "nodeSizeMultiplier": 1.57203742203742,
   "lineSizeMultiplier": 1,
-  "collapse-forces": true,
-  "centerStrength": 0.518713248970312,
-  "repelStrength": 10,
-  "linkStrength": 1,
+  "collapse-forces": false,
+  "centerStrength": 0.362785862785863,
+  "repelStrength": 11.4137214137214,
+  "linkStrength": 0.653846153846154,
   "linkDistance": 250,
-  "scale": 1,
+  "scale": 0.7132754626224423,
   "close": true
 }

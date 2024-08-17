@@ -3,6 +3,7 @@ __pycache__/
 #training/
 *.pth
 *.pt
+*.jam
 testImages/
 
 # Ignore other system files

@@ -11,14 +11,11 @@
             "id": "ffdbb36e3253f073",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "Dataset Structure.canvas",
-                "viewState": {
-                  "x": -60,
-                  "y": -278,
-                  "zoom": 0
-                }
+                "file": "Meetings/Meetings.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -88,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Dataset Structure.canvas",
+                "file": "Meetings/Meetings.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Dataset Structure.canvas",
+                "file": "Meetings/Meetings.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -128,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Dataset Structure.canvas"
+                "file": "Meetings/Meetings.md"
               }
             }
           }
@@ -149,16 +146,22 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "ffdbb36e3253f073",
+  "active": "7553d0ea103d3a70",
   "lastOpenFiles": [
+    "Meetings/2024-08-15.md",
+    "Meetings/Meetings.md",
+    "Meetings/Meetings.md",
     "Demonstrator.md",
-    "Forschungsanlage.md",
-    "Brainstorm.canvas",
-    "LLM.md",
-    "Repository.md",
     "Dataset Structure.canvas",
-    "Dataset Structure.md",
+    "Versionierung.pdf",
     "Dataset.md",
+    "Versionierung.jam",
+    "Meetings",
+    "Brainstorm.canvas",
+    "Repository.md",
+    "Forschungsanlage.md",
+    "LLM.md",
+    "Dataset Structure.md",
     "Festo/Forschungsanlage.md",
     "Festo/Demonstrator.md",
     "Festo/Brainstorm.canvas",
