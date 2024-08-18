@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "224c595461ca9353",
+        "id": "814a966fc946a274",
         "type": "tabs",
         "children": [
           {
-            "id": "ffdbb36e3253f073",
+            "id": "6c963d60b51e94f1",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Meetings/Meetings.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -85,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Meetings/Meetings.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Meetings/Meetings.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -124,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Meetings/Meetings.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -146,19 +138,19 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "7553d0ea103d3a70",
+  "active": "6c963d60b51e94f1",
   "lastOpenFiles": [
+    "Repository.md",
+    "dolthub.com.md",
+    "Demonstrator.md",
+    "Brainstorm.canvas",
     "Meetings/2024-08-15.md",
     "Meetings/Meetings.md",
-    "Meetings/Meetings.md",
-    "Demonstrator.md",
     "Dataset Structure.canvas",
     "Versionierung.pdf",
     "Dataset.md",
     "Versionierung.jam",
     "Meetings",
-    "Brainstorm.canvas",
-    "Repository.md",
     "Forschungsanlage.md",
     "LLM.md",
     "Dataset Structure.md",
