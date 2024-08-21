@@ -9,7 +9,7 @@ Quelle (https://littlebigcode.fr/why-mlops-important-to-understand/)
 **MLOps, DevOps, DataOps : what’s the difference ?**
 
 ![[Pasted image 20240821101841.png]]
-
+research 
 - Das Protokollieren aller Experimente in einem umfassenden Dashboard erleichtert den Vergleich und die Auswahl des besten Modells basierend auf definierten Metriken.
 - Die Automatisierung der Bereitstellung des ausgewählten Modells in der Produktionsumgebung wird durch diese Prozesse unterstützt und stellt sicher, dass alle erforderlichen Tests durchgeführt werden.
 - MLOps ermöglicht die Versionskontrolle von Modellen sowie der Trainingsdaten, auf denen sie basieren.
