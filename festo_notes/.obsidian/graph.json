@@ -20,6 +20,13 @@
         "a": 1,
         "rgb": 14048385
       }
+    },
+    {
+      "query": "file:Data Management System",
+      "color": {
+        "a": 1,
+        "rgb": 11392604
+      }
     }
   ],
   "collapse-display": false,
@@ -31,7 +38,7 @@
   "centerStrength": 0.337837837837838,
   "repelStrength": 11.4137214137214,
   "linkStrength": 1,
-  "linkDistance": 87,
-  "scale": 1.965556045656678,
+  "linkDistance": 271,
+  "scale": 0.7132754626224452,
   "close": false
 }
