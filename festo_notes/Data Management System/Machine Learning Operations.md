@@ -1,7 +1,7 @@
 [[Data Management System]]
 
 habe auch dieses Buch **Practical MLOps: Operationalizing Machine Learning Models**
-
+ 
 Quelle (https://littlebigcode.fr/why-mlops-important-to-understand/)
 
 ![[Pasted image 20240821101740.png]]
@@ -38,3 +38,12 @@ Quelle (https://littlebigcode.fr/mlops-why-data-model-experiment-tracking-is-imp
 
 ![[Pasted image 20240821121337.png]]
 ![[Pasted image 20240821121933.png]]
+
+
+Beispiel für Maschine Learning Operation Dagshub  
+
+https://dagshub.com/
+
+Ich habe dieses Buch gefunden und diese Kanal auf YouTube erklärt die Kapitel im Buch 
+
+https://www.youtube.com/watch?v=Kvxaj6pHeVA
