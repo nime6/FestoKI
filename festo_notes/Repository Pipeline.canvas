@@ -1,0 +1,31 @@
+{
+	"nodes":[
+		{"id":"211dbcdc19b17d8e","x":-520,"y":-600,"width":1380,"height":780,"type":"group","label":"Main-Branch ungeschützt"},
+		{"id":"8128549b4a76f20a","x":-480,"y":-180,"width":240,"height":80,"type":"text","text":"**Main**\n\nDaten -> 3206 Bilder\n"},
+		{"id":"a62b618318b8379a","type":"text","text":"**Main**\nDaten -> 3206 Bilder\ndvc init \ndvc data\ndvc puch\n","x":-140,"y":-220,"width":240,"height":160},
+		{"id":"cf873fcac56981e7","x":-171,"y":-440,"width":303,"height":160,"type":"text","text":"**split_data**\n- train\n- test\n** Diese sind getracked"},
+		{"id":"7c4dc805334e7549","x":240,"y":-220,"width":250,"height":160,"type":"text","text":"Main \nDaten -> 3206 Bilder und 3206 class.txt \n"},
+		{"id":"58dc243c81c757ff","x":-146,"y":64,"width":250,"height":60,"type":"text","text":"Dataset_umstruktur\n"},
+		{"id":"827faf76c54fa548","x":-10,"y":275,"width":250,"height":60,"type":"text","text":"Bilder umbenannt "},
+		{"id":"0528e8cf0251c2dd","x":-541,"y":245,"width":370,"height":120,"type":"text","text":"**Majd**\n- train: 533 Bilder untracked\n- test: 10 Bilder untracked "},
+		{"id":"1c159a305514062c","x":365,"y":270,"width":250,"height":70,"type":"text","text":"Model CLIP trainiert "},
+		{"id":"0ae9d2ea4c7e3735","x":177,"y":-561,"width":375,"height":281,"type":"text","text":"**CLIP**\n- Bilder wieder in der originalen Namen bekommen \n- Bild mit dem trackenden Bilder vergleichen und die tracked Bilder behalten"},
+		{"id":"5c48bf6dcc53cf5e","x":177,"y":-40,"width":240,"height":50,"color":"1","type":"text","text":"Main- Branch geschützt "},
+		{"id":"2c9c8d85767d51c4","x":-150,"y":-800,"width":250,"height":60,"type":"text","text":"Model ResNet18 wurde mit split_data trainiert"},
+		{"id":"99a88721421ad4eb","x":1000,"y":-498,"width":440,"height":116,"type":"text","text":"Dataversion besser zu verwalten verwenden von git tag und dvc checkpoint"}
+	],
+	"edges":[
+		{"id":"8d83e3280502b37b","fromNode":"8128549b4a76f20a","fromSide":"right","toNode":"a62b618318b8379a","toSide":"left"},
+		{"id":"41f21c622ef76f68","fromNode":"8128549b4a76f20a","fromSide":"bottom","toNode":"0528e8cf0251c2dd","toSide":"top"},
+		{"id":"6ec5b6e29b2b2a5f","fromNode":"a62b618318b8379a","fromSide":"top","toNode":"cf873fcac56981e7","toSide":"bottom"},
+		{"id":"043d165a4ed27f49","fromNode":"a62b618318b8379a","fromSide":"right","toNode":"7c4dc805334e7549","toSide":"left"},
+		{"id":"0fe5f82f8f789923","fromNode":"a62b618318b8379a","fromSide":"bottom","toNode":"58dc243c81c757ff","toSide":"top"},
+		{"id":"a66293b54c3fc81c","fromNode":"cf873fcac56981e7","fromSide":"left","toNode":"58dc243c81c757ff","toSide":"left"},
+		{"id":"73ff003b2c9f21e3","fromNode":"58dc243c81c757ff","fromSide":"right","toNode":"7c4dc805334e7549","toSide":"bottom"},
+		{"id":"471e77a5ed310ebe","fromNode":"cf873fcac56981e7","fromSide":"top","toNode":"2c9c8d85767d51c4","toSide":"bottom"},
+		{"id":"f5741274714bdfa6","fromNode":"0528e8cf0251c2dd","fromSide":"right","toNode":"827faf76c54fa548","toSide":"left"},
+		{"id":"3ebcd850dc315bcd","fromNode":"827faf76c54fa548","fromSide":"right","toNode":"1c159a305514062c","toSide":"left"},
+		{"id":"c02564f5faf20229","fromNode":"7c4dc805334e7549","fromSide":"top","toNode":"0ae9d2ea4c7e3735","toSide":"bottom"},
+		{"id":"05779919ecb1f98f","fromNode":"827faf76c54fa548","fromSide":"top","toNode":"0ae9d2ea4c7e3735","toSide":"left"}
+	]
+}
